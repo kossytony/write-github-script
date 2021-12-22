@@ -18,15 +18,16 @@ jobs:
           script: |
              const fs = require('fs')
              const issueBody = fs.readFileSync(".github/ISSUE_RESPONSES/comment.md", "utf8")
+             const newIssueBody = issueBody + "test added text"
              github.issues.createComment({
              issue_number: context.issue.number,
              owner: context.repo.owner,
              repo: context.repo.repo,
-             body: issueBody
+             body: newIssueBody
              })
 
       - name: Add issue to project board
-        if: contains(github.event.issue.labels.*.name, 'bug')
+        if: contains(github.event.issue.labels.*.name, 'documentation')
         uses: actions/github-script@0.8.0
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
